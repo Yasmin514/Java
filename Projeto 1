@@ -1,23 +1,35 @@
-import java.util.Scanner;
+import java.util.Scanner; // Importa a classe Scanner para ler entradas do usuário.
 
 public class Pedido {
+    // Criação de um objeto scanner para ler a entrada do usuário.
     static Scanner scanner = new Scanner(System.in);
+    
+    // Array de itens disponíveis no supermercado
     static String[] itens = {"Feijão", "Arroz", "Macarrão", "Cartela de ovos",
             "Margarina", "Tomate", "Alho", "Molho de tomate", "Cenoura", "Repolho",
             "Água Mineral(1L)", "Água Mineral(2L)", "Chá Matte(1L)", "Chá Matte(2L)",
             "Refrigerante(1L)", "Refrigerante(2L)"};
 
+    // Preços dos itens correspondentes ao array 'itens'
     static double[] precosItens = {5.00, 5.00, 4.00, 15.00, 10.00, 6.50, 3.00, 2.50, 7.00,
             6.00, 2.00, 4.00, 4.50, 9.00, 7.00, 14.00};
+    
+    // Variáveis para controlar o valor total da compra e os descontos aplicados.
     static double desconto = 0.0;
     static double valorTotalDaCompra = 0.0;
     static double valorFinal = 0.0;
+
+    // Array que representa o carrinho de compras, onde o índice corresponde ao item e o valor à quantidade
     static int[] carrinho = new int[itens.length];
+    
+    // Variáveis para controlar a opção escolhida pelo usuário
     static int opcaoEscolhida = 0;
     static int opcao = 0;
 
     public static void main(String[] args) {
+        // Laço que mantém o programa em funcionamento até que a opção de encerrar seja escolhida.
         do {
+            // Exibe o menu principal com as opções
             System.out.println("       *******MENU******                   ");
             System.out.println("=============================");
             System.out.println("""
@@ -29,34 +41,38 @@ public class Pedido {
                     """);
             System.out.println("=============================");
             System.out.print("O que você deseja fazer? Escolha uma opção: ");
-            opcao = scanner.nextInt();
-            scanner.nextLine();
+            opcao = scanner.nextInt();  // Lê a opção do usuário
+            scanner.nextLine();  // Limpa o buffer de entrada
 
+            // Switch que executa uma ação dependendo da opção escolhida
             switch (opcao) {
                 case 1:
-                    adicionarItemCarrinho(scanner);
+                    adicionarItemCarrinho(scanner);  // Adiciona item ao carrinho
                     break;
                 case 2:
-                    excluirItemCarrinho();
+                    excluirItemCarrinho();  // Exclui item do carrinho
                     break;
                 case 3:
-                    visualizarPedido();
+                    visualizarPedido();  // Exibe o conteúdo do carrinho
                     break;
                 case 4:
-                    encerrarPedido();
+                    encerrarPedido();  // Finaliza o pedido
                     break;
                 case 5:
-                    System.out.println("Programa encerrado!");
+                    System.out.println("Programa encerrado!");  // Encerra o programa
                     break;
                 default:
+                    // Se a opção não for válida, exibe mensagem de erro
                     if (opcao > 5 || opcao < 1) {
                         System.out.println("Opção inválida! Digite um número válido (1 a 5).");
                     }
             }
-        } while (opcao != 5);
+        } while (opcao != 5);  // Continua até o usuário escolher encerrar o programa
     }
 
+    // Método para adicionar item ao carrinho
     public static void adicionarItemCarrinho(Scanner scanner) {
+        // Exibe o menu de itens disponíveis
         System.out.println("==============================================================================");
         System.out.println("                           ******MENU******                                   ");
         System.out.println("==============================================================================");
@@ -69,26 +85,30 @@ public class Pedido {
         System.out.println(" 7 - Alho(500g) R$ 3,00;                      15 - Refrigerante(1L) R$ 7,00;  ");
         System.out.println(" 8 - Molho de tomate R$ 2,50;                 16 - Refrigerante(2L) R$ 14,00; ");
         System.out.println("==============================================================================");
+        
         System.out.print("Qual item você deseja adicionar? ");
-        opcaoEscolhida = scanner.nextInt();
-        scanner.nextLine();
+        opcaoEscolhida = scanner.nextInt();  // Lê a opção do item que o usuário deseja adicionar
+        scanner.nextLine();  // Limpa o buffer de entrada
 
+        // Verifica se a opção escolhida é válida
         if (opcaoEscolhida >= 1 && opcaoEscolhida <= itens.length) {
             System.out.print("Qual a quantidade você deseja adicionar? ");
-            int quantidadeAdicionar = scanner.nextInt();
-            scanner.nextLine();
-            carrinho[opcaoEscolhida - 1] += quantidadeAdicionar;
-            valorTotalDaCompra += precosItens[opcaoEscolhida - 1] * quantidadeAdicionar;
+            int quantidadeAdicionar = scanner.nextInt();  // Lê a quantidade do item
+            scanner.nextLine();  // Limpa o buffer de entrada
+            carrinho[opcaoEscolhida - 1] += quantidadeAdicionar;  // Atualiza a quantidade do item no carrinho
+            valorTotalDaCompra += precosItens[opcaoEscolhida - 1] * quantidadeAdicionar;  // Atualiza o valor total da compra
             System.out.println("Produto adicionado ao carrinho!");
             System.out.println(itens[opcaoEscolhida - 1] + " adicionado ao pedido.");
-            System.out.println("Total atual do carrinho: R$ " + valorTotalDaCompra);
+            System.out.println("Total atual do carrinho: R$ " + valorTotalDaCompra);  // Exibe o total atual
         } else {
-            System.out.println("Opção inválida.");
+            System.out.println("Opção inválida.");  // Caso a opção seja inválida
         }
     }
 
+    // Método para excluir item do carrinho
     public static void excluirItemCarrinho() {
         System.out.println("Itens no carrinho:");
+        // Exibe todos os itens que estão no carrinho
         for (int i = 0; i < itens.length; i++) {
             if (carrinho[i] > 0) {
                 System.out.println(itens[i] + " - Quantidade: " + carrinho[i]);
@@ -96,39 +116,46 @@ public class Pedido {
         }
 
         System.out.print("Escolha um item para excluir do carrinho: ");
-        opcaoEscolhida = scanner.nextInt();
-        scanner.nextLine();
+        opcaoEscolhida = scanner.nextInt();  // Lê a opção do item que o usuário deseja remover
+        scanner.nextLine();  // Limpa o buffer de entrada
 
+        // Verifica se a opção escolhida é válida
         if (opcaoEscolhida >= 1 && opcaoEscolhida <= itens.length) {
             System.out.print("Qual é a quantidade que você deseja excluir? ");
-            int quantidadeExcluir = scanner.nextInt();
-            scanner.nextLine();
+            int quantidadeExcluir = scanner.nextInt();  // Lê a quantidade do item a ser excluída
+            scanner.nextLine();  // Limpa o buffer de entrada
+            // Verifica se o carrinho contém a quantidade suficiente para excluir
             if (carrinho[opcaoEscolhida - 1] >= quantidadeExcluir) {
-                carrinho[opcaoEscolhida - 1] -= quantidadeExcluir;
-                valorTotalDaCompra -= precosItens[opcaoEscolhida - 1] * quantidadeExcluir;
+                carrinho[opcaoEscolhida - 1] -= quantidadeExcluir;  // Atualiza a quantidade no carrinho
+                valorTotalDaCompra -= precosItens[opcaoEscolhida - 1] * quantidadeExcluir;  // Atualiza o valor total da compra
                 System.out.println("Produto removido do carrinho!");
                 System.out.println(itens[opcaoEscolhida - 1] + " removido do pedido.");
-                System.out.println("Total atual do carrinho: R$ " + valorTotalDaCompra);
+                System.out.println("Total atual do carrinho: R$ " + valorTotalDaCompra);  // Exibe o total atualizado
             } else {
-                System.out.println("Quantidade inválida.");
+                System.out.println("Quantidade inválida.");  // Se a quantidade no carrinho for insuficiente
             }
         } else {
-            System.out.println("Opção inválida.");
+            System.out.println("Opção inválida.");  // Se a opção escolhida for inválida
         }
     }
 
+    // Método para visualizar o conteúdo do carrinho
     public static void visualizarPedido() {
         System.out.println("Itens no carrinho:");
+        // Exibe todos os itens presentes no carrinho e suas quantidades
         for (int i = 0; i < itens.length; i++) {
             if (carrinho[i] > 0) {
                 System.out.println(itens[i] + " - Quantidade: " + carrinho[i]);
             }
         }
+        // Exibe o valor total do carrinho
         System.out.println("Total do carrinho: R$ " + valorTotalDaCompra);
     }
 
+    // Método para encerrar o pedido
     public static void encerrarPedido() {
         System.out.println("Seu pedido:");
+        // Exibe todos os itens do pedido, suas quantidades e valores
         for (int i = 0; i < itens.length; i++) {
             if (carrinho[i] > 0) {
                 System.out.println(itens[i] + " - Quantidade: " + carrinho[i] + " - Preço: R$ " + (precosItens[i] * carrinho[i]));
@@ -138,24 +165,26 @@ public class Pedido {
         System.out.println("**************************************");
         System.out.println("Escolha a forma de pagamento:");
         System.out.println("**************************************");
+        // Exibe as opções de pagamento
         System.out.println("""
                 | 1 - Pix/ Dinheiro;
                 | 2 - Crédito;
                 | 3 - Débito;
                 """);
-        int escolhaPagamento = scanner.nextInt();
-        scanner.nextLine();
+        int escolhaPagamento = scanner.nextInt();  // Lê a opção de pagamento escolhida
+        scanner.nextLine();  // Limpa o buffer de entrada
 
+        // Switch que aplica desconto dependendo do tipo de pagamento
         switch (escolhaPagamento) {
             case 1:
-                desconto = 0.05;
+                desconto = 0.05;  // Desconto de 5% para Pix/Dinheiro
                 System.out.println("Pagamento via Pix selecionado. Desconto de 5% aplicado.");
                 break;
             case 2:
                 System.out.println("Possui o cartão da loja (S/N)? ");
                 String cartaoCreditoLoja = scanner.nextLine();
                 if (cartaoCreditoLoja.equalsIgnoreCase("S")) {
-                    desconto = 0.07;
+                    desconto = 0.07;  // Desconto de 7% se usar o cartão da loja
                     System.out.println("Pagamento via crédito com cartão da loja selecionado. Desconto de 7% aplicado.");
                 } else {
                     System.out.println("Pagamento via crédito selecionado. Nenhum desconto aplicado.");
@@ -165,21 +194,22 @@ public class Pedido {
                 System.out.println("Possui o cartão da loja (S/N)? ");
                 String cartaoDebitoLoja = scanner.nextLine();
                 if (cartaoDebitoLoja.equalsIgnoreCase("S")) {
-                    desconto = 0.07;
+                    desconto = 0.07;  // Desconto de 7% se usar o cartão da loja
                     System.out.println("Pagamento via débito com cartão da loja selecionado. Desconto de 7% aplicado.");
                 } else {
                     System.out.println("Pagamento via débito selecionado. Nenhum desconto aplicado.");
                 }
                 break;
             default:
-                System.out.println("Opção de pagamento inválida!");
+                System.out.println("Opção de pagamento inválida!");  // Se a opção de pagamento for inválida
                 break;
         }
 
+        // Calcula o valor do desconto e o valor final da compra
         double valorDesconto = (valorTotalDaCompra * desconto);
         valorFinal = (valorTotalDaCompra - valorDesconto);
+        // Exibe o valor final da compra
         System.out.println("O valor total do seu carrinho é: R$ " + valorFinal);
-        System.out.println("Pedido encerrado.");
+        System.out.println("Pedido encerrado.");  // Finaliza o pedido
     }
 }
-
