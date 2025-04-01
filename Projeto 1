@@ -74,7 +74,7 @@ public class Pedido {
         scanner.nextLine();
 
         if (opcaoEscolhida >= 1 && opcaoEscolhida <= itens.length) {
-            System.out.println("Qual a quantidade você deseja adicionar? ");
+            System.out.print("Qual a quantidade você deseja adicionar? ");
             int quantidadeAdicionar = scanner.nextInt();
             scanner.nextLine();
             carrinho[opcaoEscolhida - 1] += quantidadeAdicionar;
@@ -100,7 +100,7 @@ public class Pedido {
         scanner.nextLine();
 
         if (opcaoEscolhida >= 1 && opcaoEscolhida <= itens.length) {
-            System.out.println("Qual é a quantidade que você deseja excluir? ");
+            System.out.print("Qual é a quantidade que você deseja excluir? ");
             int quantidadeExcluir = scanner.nextInt();
             scanner.nextLine();
             if (carrinho[opcaoEscolhida - 1] >= quantidadeExcluir) {
@@ -182,3 +182,4 @@ public class Pedido {
         System.out.println("Pedido encerrado.");
     }
 }
+
