@@ -1,0 +1,191 @@
+static Scanner scanner = new Scanner(System.in);
+static String [] itens = {"Feijão", "Arroz", "Macarrão", "Cartela de ovos",
+       "Margarina", "Tomate", "Alho", "Molho de tomate", "Cenoura", "Repolho"
+       "Água Mineral(1L)", "Água Mineral(2L)", "Chá Matte(1L)", "Chá Matte(2L)",
+       "Refrigerante(1L)", "Refrigerante(2L)"};
+
+static double[] precosItens = {5.00, 5.00, 4.00, 15.00, 10.00, 6.50, 3.00, 2.50, 7.00,
+       6.00, 2.00, 4.00, 4.50, 9.00, 7.00, 14.00};
+static double desconto = 0,0;
+static double valorTotalDaCompra = 0.0;
+static double valorFinal = 0.0;
+static int [] carrinho = new int[itens.length];
+static int opcaoEscohlida = 0;
+static int opcao = 0;
+
+public static void main(String[] args) {
+    int i = 0;
+    do {
+     System.out.println("       *******MENU******                   ");
+     System.out.println("=============================")
+     System.out.printl("""
+                      | 1 - Adicionar pedido;
+                      | 2 - Excluir pedido;
+                      | 3 - Visualizar pedido;
+                      | 4 - Encerrar pedido;
+                      | 5 - Encerrar programa;
+                      """);
+    System.out.printl("=============================");
+    System.out.print("O que vocêm deseja fazer? Escolha uma opção: ");
+    opcao = scanner.nextInt();
+    scanner.nextLine();
+
+    switch (opcao) {
+        case 1:
+            adicionarItemCarrinho(scanner, itens[opcao - 1], i);
+            break;
+        case 2:
+            excluirItemCarrinho();
+            break;
+        case 3:
+            visualizarPedido();
+            break;
+        case 4:
+            encerrarPedido();
+            break;
+        case 5:
+            System.out.println("Programa encerrado! ");
+        default:
+            if (opcao > 5 || opcao < 1) {
+                System.out.println("Opção inválida! Digite um número válido (1 a 5).");
+                break;
+            }
+    }
+} while (opcao!= 5);
+}
+
+public static void adicionarItemCarrinho(Scanner scanner, String item, int i) { 
+
+    System.out.println("==============================================================================");
+    System.out.println("                           ******MENU******                                   ");
+    System.out.println("==============================================================================");
+    System.out.println(" 1 - Feijão(1Kg) R$ 5,00;                     9  - Cenoura(500g) R$ 7,00;      ");
+    System.out.println(" 2 - Arroz(1Kg)  R$ 5,00;                     10 - Repolho(100g) R$ 6,00;     "); 
+    System.out.println(" 3 - Macarrão(500g) R$ 4,00;                  11 - Água Mineral(1L) R$ 2,00;  ");
+    System.out.println(" 4 - Cartela de Ovos(30) R$ 15,00;            12 - Água Mineral(2L) R$ 4,00;  ");
+    System.out.println(" 5 - Margarina(500g) R$ 10,00;                13 - Chá Matte(1L) R$ 4,50;     ");
+    System.out.println(" 6 - Tomate(500g) R$ 6,50;                    14 - Chá Matte(2L) R$ 9,00;     ");
+    System.out.println(" 7 - Alho(500g) R$ 3,00;                      15 - Refrigerante(1L) R$ 7,00;  ");
+    System.out.println(" 8 - Molho de tomate R$ 2,50;                 16 - Refrigerante(2L) R$ 14,00; ");
+    System.out.println("==============================================================================");
+    System.out.println("Qual item você deseja adicionar? ");
+    opcaoEscolhida = scanner.nextInt();
+    scanner.nextLine();
+
+    if (i < carrinho.lenght){
+        System.out.println("Qual a quantidade você deseja adicionar? ");
+        int quantidadeAdicionar = scanner.nextInt()
+        scanner.nextLine();
+        carrinho[opcaoEscohlida - 1] += quantidadeAdicionar;
+        valorTotalDaCompra += precosItens[opcaoEscolhida -1] * quantidadeAdicionar;
+        System.out.println("Produto adicionado ao carrinho! ")
+        System.out.println(itens[opcaoEscolhida - 1] + "adicionar ao pedido.");
+        System.out.println("Total atual do carrinho: R$ " + valorTotalDaCompra);
+    } else {
+        System.out.println("Totalatual de itens atingidos. Não é possível adicionar mais itens.");
+    }
+}
+
+public static void excluirItemCarrinho(){
+
+    System.out.println("Itens no carrinho:");
+    for (int i = 0; i < itens.lenght; i++) {
+        System.out.println("Itens selecionados:" + itens[i]);
+        System.out.println("Quantidade: " + carrinho[i]);
+    }
+}
+System.out.println("Escolha um item para excluir do carrinho: ");
+opcaoEscolhida = scanner.nexInt();
+scanner.nextLine();
+
+if (opcaoEscolhida >= 1 && opcaoEscolhida <= itens.length) {
+    System.out.println("Qual é quantridade que você deseja excluir? ");
+    int quantidadeExcluir = scanner.nexInt();
+    scanner.nextLine();
+    if (carrinho[opcaoEscolhida - 1] >= quuantidadeExcluir){
+        carrinho[opcaoEscolhida - 1] -= quantidadeExcluir;
+        valorTotalDaCompra -= precosItens[opcaoEscolhida - 1] * quantidadeExcluir;
+        System.out.println("Produto removido do carrinho! ");
+        System.out.println(itens[opcaoEscolhida - 1] + "removido pedido.");
+        System.out.println("Total atual do carrinho: R$ " + valorTotalDaCompra);
+} else {
+    System.out.println("Opção inválida. Tente novamenre.");
+}
+}
+
+public static void visualizarPedido(){
+    System.out.println("Itens no carrinho:");
+    for (int i = 0; i < itens.lenght; i ++ ) {
+        if (carrinho[i] > 0) {
+            System.out.println("Itens selecionados: " + itens[i]);
+            System.out.println("Quantidade: " + carrinho[i]);
+            System.out.println("Preço: R$ " + (precosItens[i] * carrinho[i]));
+        }
+    }
+    System.out.println("Total do carrinho: R$ " + valorTotalDaCompra);
+}
+public estatic void encerrarPedido(){
+    System.out.println("Seu pedido: ");
+
+    for (int i = 0; i < itens.lenght; i++) {
+        if (carrinho[i] > 0){
+            System.out.println(itens[i] + " - Quantidade: " + carrinho [i] + "Preço: R$" + (precosItens[i] *
+            carrinho[i]));
+        }
+    }
+    System.out.println("**************************************");
+    System.out.println(" Escolha a forma de pagamento: ");
+    System.out.println("**************************************");
+    System.out.println("""
+            | ---------------------------
+            | 1 - Pix/ Dinheiro;
+            | 2 - Crédito;
+            | 3 - Débito;
+            | ----------------------------
+            """);
+    int escolhaPagamento = scanner.nexInt();
+    scanner.nextLine();
+
+    switch (escolhaPagamento){
+        case 1:
+            desconto = 0.05;
+            System.out.println("Pagamento via Pix selecionado. Desconto de 5% aplicado.");
+            break;
+
+        case 2:
+            System.out.println("Possui o cartão da loja (S/N)? ");
+            String cartaoCreditoLoja = scanner.nextLine();
+
+            if(cartaoCreditoLoja.equalsIgnoreCase( anotherString: "S" ) ){
+                desconto = 0.07;
+                System.out.println("Pagamento via crédito com cartão da loja selecionado. Desconto de 7% aplicado.");
+            } else if(cartaoCreditoLoja.equalsIgnoreCase( anotherString: "N")) {
+                System.out.println("Pagamento via crédito selecionado. Nenhum desconto aplicado.");
+            } else {
+                System.out.println("Opção inválida! Nenhum desconto aplicado!");
+            }
+            break;
+
+        case 3:
+            System.out.println("Possui o cartão da loja (S/N)? ");
+            String cartaoDebitoLoja = scanner.nextLine();
+
+            if (cartaoDebitoLoja.equalsIgnoreCase( anotherString: "S") ){
+                desconto = 0.07;
+                System.out.println("Pagamento via débito com cartão da loja selecionado. Descontoo de 7% aplicado.");
+        } else if(cartaoDebitoLoja.equalsIgnoreCase (anotherString: "N")) {
+            System.out.println("Pagamento via crédito selecionado. Nenhum desconto aplicado.");
+        } else {
+            System.out.println("Opçãpo inválida! Nenhum desconto aplicado!");
+        }
+        break;
+
+    default:
+        System.out.println("Opção de pagamento inálida!");
+        break;
+    }
+    double valorDesconto = (valorTotalDaCompra * desconto);
+    valorFinal = (valorTotalDaCompra - valorDesconto);
+    System.out.println("O valor total do seu carrinho é: R$" + valorFinal + ".");
+    System.out.println("Pedido encerrado. ");
+
